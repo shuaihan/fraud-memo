@@ -18,7 +18,23 @@
 >> file name 00% [#########           ] 3123/121233
 >> Done
 >> ###################################################
-```     
+```   
+
+- classes
+    - CrawlerDownloader
+    - CrawlerDomParser
+    - CrawlerConsoleBar 
+    - CrwalerHttp
+        ```
+        XXX.post("http://httpbin.org/post")
+          .header("accept", "application/json")
+          .queryString("apiKey", "123")
+          .field("parameter", "value")
+          .field("foo", "bar")
+        
+        ```    
+    
+
 
      
 
