@@ -21,10 +21,10 @@
 ```   
 
 - classes
-    - CrawlerDownloader
-    - CrawlerDomParser
-    - CrawlerConsoleBar 
-    - CrwalerHttp
+    - com.example.sitecrawler.CrawlerDownloader
+    - com.example.sitecrawler.CrawlerDomParser
+    - com.example.sitecrawler.CrawlerConsoleProgressBar 
+    - com.example.sitecrawler.CrwalerHttp
         ```
         XXX.post("http://httpbin.org/post")
           .header("accept", "application/json")
@@ -33,6 +33,10 @@
           .field("foo", "bar")
         
         ```    
+        
+- TDD 
+    - TDD란 : https://gist.github.com/ihoneymon/1fa3b302be99121fabd8
+    - junit tutorials : https://www.tutorialspoint.com/junit/      
     
 
 
