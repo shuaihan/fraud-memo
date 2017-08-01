@@ -2,6 +2,6 @@ package com.example.sitecrawler;
 
 @FunctionalInterface
 public interface DownloadListner {
-     void callback(long total, long current, int status);
+     void callback(String filename, long total, long current, int status);
 
 }

@@ -1,6 +1,7 @@
 package com.example.sitecrawler;
 
 
+import org.apache.commons.codec.binary.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -22,8 +23,9 @@ public class CrawlerDomParser {
 
         for (Element el : img) {
             String src = el.absUrl("src");
-
-            imgSrc.add(src);
+            if(org.apache.commons.lang3.StringUtils.isNotBlank(src)) {
+                imgSrc.add(src);
+            }
         }
 
         return imgSrc;

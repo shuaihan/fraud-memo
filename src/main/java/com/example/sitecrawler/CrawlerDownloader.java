@@ -35,21 +35,19 @@ public class CrawlerDownloader {
                 } else {
                     // extracts file name from URL
                     int indexname = imageUrl.lastIndexOf("/");
-                    if (indexname == imageUrl.length()) {
+                    if (indexname == imageUrl.length()-1) {
                         imageUrl = imageUrl.substring(1, indexname);
                     }
                     indexname = imageUrl.lastIndexOf("/");
                     fileName= imageUrl.substring(indexname, imageUrl.length());
                 }
-                System.out.println("Content-Type = " + contentType);
-                System.out.println("Content-Disposition = " + disposition);
-                System.out.println("Content-Length = " + contentLength);
-                System.out.println("fileName = " + fileName);
-                listner.callback(contentLength, 0, HttpStatus.SC_OK);
+
+                listner.callback(fileName, contentLength, 0, HttpStatus.SC_OK);
                 // opens input stream from the HTTP connection
                 InputStream inputStream = httpConn.getInputStream();
                 String saveFilePath = saveDir + File.separator + fileName;
                 // opens an output stream to save into file
+                
                 FileOutputStream outputStream = new FileOutputStream(saveFilePath);
 
                 int currentBytesRead = 0;
@@ -58,23 +56,23 @@ public class CrawlerDownloader {
                 while ((bytesRead = inputStream.read(buffer)) != -1) {
                     outputStream.write(buffer, 0, bytesRead);
                     currentBytesRead +=  bytesRead;
-                    listner.callback(contentLength, currentBytesRead, HttpStatus.SC_OK);
+                    listner.callback(fileName, contentLength, currentBytesRead, HttpStatus.SC_OK);
                 }
 
                 outputStream.close();
                 inputStream.close();
 
-                System.out.println("File downloaded");
+
                 return true;
             }
 
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            System.out.println(imageUrl);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(imageUrl);
         }
 
-        listner.callback(0, 0, HttpStatus.SC_SERVICE_UNAVAILABLE);
+        listner.callback("", 0, 0, HttpStatus.SC_SERVICE_UNAVAILABLE);
         return false;
     }
 }

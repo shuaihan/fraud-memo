@@ -1,9 +1,13 @@
 package com.example.sitecrawler;
 
+import org.apache.http.HttpStatus;
+
 import java.io.PrintStream;
+import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 public class Main {
@@ -18,26 +22,35 @@ public class Main {
         String url = in.next();
 
         System.out.println(String.format("Connecting to %s ...", url));
+        HttpResponse<String> response = CrwalerHttp.get(url).asString();
+        if(response.getStatus() == HttpStatus.SC_OK) {
+            System.out.println("Success to connecting");
+            System.out.println("Parsing to response body ...");
+            List<String> imageList = CrawlerDomParser.findImageSrcList(response.getBody());
+            System.out.println("Crawling images ...");
+            imageList.stream().forEach(n -> {
+                CrawlerDownloader.downloadImages(n, "./images", (filename, total, current, status) -> {
+                    if(status == HttpStatus.SC_OK) {
+                        CrawlerConsoleProgressBar.updateProgressBar(filename, current * 100 / total);
+                    }
+                    else {
+                        System.out.println("Error : " + n);
+                    }
 
-        System.out.println("Success to connecting");
-        System.out.println("Parsing to response body ...");
-        System.out.println("Crawling images ...");
+                }) ;
+                System.out.println("");
+               
+            });
 
-        // file name 00% [#########           ] 3123/121233 
-        for(int i = 0 ; i <= 100 ; i++) {
-            System.out.print('\r');
-            final int sharpCount = i/2;
-            String progressMark = Stream.iterate(0, n -> n+1)
-                    .limit(50)
-                    .map(n -> sharpCount >= n ? "#" : " ")
-                    .collect(Collectors.joining());
-            System.out.print(String.format("file name %02d%% [%s] %d/100", i, progressMark, i));
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                // ignore
-            }
+
         }
+        else {
+            System.out.println("Failed to connect url");
+        }
+
+
+
+
         System.out.println("");
         System.out.println("\r\nDone");
         System.out.println(bar);
