@@ -40,10 +40,11 @@
 
 - [Java Doc](https://www.lesstif.com/pages/viewpage.action?pageId=26083721)  
 - [HTTP protocols](http://gyrfalcon.tistory.com/entry/HTTP-%EC%9D%91%EB%8B%B5-%EC%BD%94%EB%93%9C-%EC%A2%85%EB%A5%98-HTTP-%EB%A9%94%EC%86%8C%EB%93%9C-%EC%A2%85%EB%A5%98)
-
-    
-       
-
+- Naver Open API : https://developers.naver.com/main/
+- builder pattern, effective java2
+    - https://gist.github.com/hitenpratap/8e1f28d60c0bb11a5bca
+- json parser 
+- jsoup: Java HTML Parser :  https://jsoup.org/   
 
      
 
