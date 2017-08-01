@@ -34,6 +34,7 @@ public class HttpResponse<T> {
             e.printStackTrace();
         }
 
+
     }
 
     public int getStatus() {
@@ -52,4 +53,14 @@ public class HttpResponse<T> {
         return body;
     }
 
+
+    @Override
+    public String toString() {
+        return "HttpResponse{" +
+                "statusCode=" + statusCode +
+                ", statusText='" + statusText + '\'' +
+                ", rawBody=" + rawBody +
+                ", body=" + body +
+                '}';
+    }
 }

@@ -69,37 +69,44 @@ public class CrwalerHttp {
         if(headers == null) {
             headers  = new HashMap<>();
         }
-        queryStrings.put(name, value);
+        headers.put(name, value);
         return this;
     }
 
     public String buildQueryString() {
 
         if(queryStrings != null && !queryStrings.isEmpty()) {
-            return  queryStrings.entrySet().stream()
+            String queryString =   queryStrings.entrySet().stream()
                     .map(e -> {
                         return e.getKey() + '=' + e.getValue();
                     }).collect(Collectors.joining("&"));
+            if(url.contains("?")) {
+                return  queryString;
+            }
+            else {
+               return "?" + queryString;
+            }
         }
 
         return "";
     }
 
 
-    public <T> HttpResponse<T> asString() {
+    public HttpResponse<String> asString() {
         String apiURL = url + buildQueryString();
 
-
+        System.out.println(apiURL);
         try {
             URL url = new URL(apiURL);
             final HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            System.out.println(method.name());
             con.setRequestMethod(method.name());
             if(headers != null) {
                 headers.entrySet().stream().forEach(e -> {
                     con.setRequestProperty(e.getKey(), e.getValue());
                 });
             }
-            return new HttpResponse(con);
+            return new HttpResponse<String>(con);
 
         } catch (IOException e) {
 
@@ -108,7 +115,7 @@ public class CrwalerHttp {
 
         }
 
-        return new HttpResponse(null);
+        return new HttpResponse<String>(null);
 
 
     }
